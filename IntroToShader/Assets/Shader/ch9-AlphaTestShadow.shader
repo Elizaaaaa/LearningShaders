@@ -1,16 +1,20 @@
-﻿Shader "ShaderBook/ch9/ch9-ForwardRender"
+﻿Shader "ShaderBook/ch9/ch9-AlphaTestShadow"
 {
 	Properties
 	{
 		_Color("Color Tint", Color) = (1, 1, 1, 1)
-		_Specular("Specular", Color) = (1, 1, 1, 1)
-		_Gloss("Gloss", Range(8.0, 256.0)) = 20.0
+		_MainTex("Main Tex", 2D) = "white" {}
+		_Cutoff("Cut off", float) = 0.5
 	}
 	SubShader
 	{
+		Tags {"Queue" = "AlphaTest" "IgnoreProjector" = "true" "RenderType" = "TransparentCutout"}
+
 		Pass
 		{
 			Tags {"LightMode" = "ForwardBase"}
+
+			Cull Off
 
 			CGPROGRAM
 
@@ -24,19 +28,22 @@
 			#include "AutoLight.cginc"
 
 			fixed4 _Color;
-			fixed4 _Specular;
-			float _Gloss;
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			float _Cutoff;
 
 			struct a2v {
 				float4 vertex : POSITION;
 				float3 normal : NORMAL;
+				float4 texcoord : TEXCOORD0;
 			};
 
 			struct v2f {
 				float4 pos : SV_POSITION;
 				float3 worldNormal : TEXCOORD0;
 				float3 worldPos : TEXCOORD1;
-				SHADOW_COORDS(2)
+				float2 uv : TEXCOORD2;
+				SHADOW_COORDS(3)
 			};
 
 			v2f vert(a2v v) {
@@ -45,6 +52,7 @@
 				o.pos = UnityObjectToClipPos(v.vertex);
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+				o.uv = _MainTex_ST.xy * v.texcoord.xy + _MainTex_ST.zw;
 
 				TRANSFER_SHADOW(o);
 
@@ -55,18 +63,19 @@
 				float3 worldNormal = normalize(i.worldNormal);
 				float3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 
-				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+				float4 texColor = tex2D(_MainTex, i.uv);
+				if (texColor.a - _Cutoff < 0) discard;
+
+				fixed3 albedo = texColor.rgb * _Color.rgb;
+
+				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 	
 				fixed3 diffuse = _LightColor0.rgb * _Color.rgb * max(0, dot(worldNormal, worldLightDir));
 
-				float3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
-				float3 halfDir = normalize(viewDir + worldLightDir);
-
-				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(halfDir, worldNormal)), _Gloss);
 
 				UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos);
 
-				return fixed4(ambient + (diffuse + specular) * atten, 1.0);
+				return fixed4(ambient + (diffuse) * atten, 1.0);
 
 			}
 
@@ -149,5 +158,5 @@
 			ENDCG
 		}
 	}
-	Fallback "Specular"
+	Fallback "Transparent/Cutout/VertexLit"
 }
