@@ -282,12 +282,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\Helpers\Rotating.cs" />
+    <Compile Include="Assets\Script\Helpers\SetPropertyAttribute.cs" />
+    <Compile Include="Assets\Script\Helpers\Translating.cs" />
+    <Compile Include="Assets\Script\ProceduralTexGenerator.cs" />
     <Compile Include="Assets\Script\RenderCubemapWizard.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\ch10-Fresnel.shader" />
+    <None Include="Assets\Shader\ch10-GlassRefraction.shader" />
     <None Include="Assets\Shader\ch10-Reflection.shader" />
     <None Include="Assets\Shader\ch10-Refraction.shader" />
+    <None Include="Assets\Shader\ch11-ImageSequence.shader" />
+    <None Include="Assets\Shader\ch11-ScrollingBg.shader" />
+    <None Include="Assets\Shader\ch11-Water.shader" />
     <None Include="Assets\Shader\ch6-Blinn.shader" />
     <None Include="Assets\Shader\ch6-DiffusePixel.shader" />
     <None Include="Assets\Shader\ch6-DiffuseVertex.shader" />
