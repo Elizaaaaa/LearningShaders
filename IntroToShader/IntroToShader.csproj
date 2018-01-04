@@ -282,6 +282,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\BightnessSaturarionContrast.cs" />
+    <Compile Include="Assets\Script\Bloom.cs" />
+    <Compile Include="Assets\Script\EdgeDetection.cs" />
+    <Compile Include="Assets\Script\Gaussian.cs" />
+    <Compile Include="Assets\Script\Helpers\PostEffectBase.cs" />
     <Compile Include="Assets\Script\Helpers\Rotating.cs" />
     <Compile Include="Assets\Script\Helpers\SetPropertyAttribute.cs" />
     <Compile Include="Assets\Script\Helpers\Translating.cs" />
@@ -296,6 +301,10 @@
     <None Include="Assets\Shader\ch11-ImageSequence.shader" />
     <None Include="Assets\Shader\ch11-ScrollingBg.shader" />
     <None Include="Assets\Shader\ch11-Water.shader" />
+    <None Include="Assets\Shader\ch12-BSC.shader" />
+    <None Include="Assets\Shader\ch12-Bloom.shader" />
+    <None Include="Assets\Shader\ch12-EdgeDetection.shader" />
+    <None Include="Assets\Shader\ch12-Gaussian.shader" />
     <None Include="Assets\Shader\ch6-Blinn.shader" />
     <None Include="Assets\Shader\ch6-DiffusePixel.shader" />
     <None Include="Assets\Shader\ch6-DiffuseVertex.shader" />
