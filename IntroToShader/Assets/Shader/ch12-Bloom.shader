@@ -70,9 +70,10 @@
 
 		ENDCG
 
-		ZTest Always Cull Off ZWrite Off
+
 
 		Pass {
+		ZTest Always Cull Off ZWrite Off
 		CGPROGRAM
 #pragma vertex vertExtractBright  
 #pragma fragment fragExtractBright  
@@ -85,6 +86,7 @@
 		UsePass "ShaderBook/ch12/ch12-Gaussian/GAUSSIAN_BLUR_HORIZONTAL"
 
 		Pass{
+		ZTest Always Cull Off ZWrite Off
 		CGPROGRAM
 #pragma vertex vertBloom  
 #pragma fragment fragBloom  

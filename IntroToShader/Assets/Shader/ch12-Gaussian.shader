@@ -8,7 +8,7 @@
 		SubShader
 		{
 			// No culling or depth
-			Cull Off ZWrite Off ZTest Always
+
 
 			CGINCLUDE
 
@@ -77,6 +77,8 @@
 				Pass {
 				NAME "GAUSSIAN_BLUR_VERTICAL"
 
+				Cull Off ZWrite Off ZTest Always
+
 					CGPROGRAM
 						#pragma vertex vertBlurVertical
 						#pragma fragment fragBlur
@@ -85,6 +87,8 @@
 
 			Pass {
 				NAME "GAUSSIAN_BLUR_HORIZONTAL"
+
+				Cull Off ZWrite Off ZTest Always
 
 					CGPROGRAM
 						#pragma vertex vertBlurHorizontal
